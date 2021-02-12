@@ -10,7 +10,6 @@ public class HoverPreview: MonoBehaviour
     public float TargetScale;
     public GameObject previewGameObject;
     public bool ActivateInAwake = false;
-
     // PRIVATE FIELDS
     private static HoverPreview currentlyViewing = null;
 

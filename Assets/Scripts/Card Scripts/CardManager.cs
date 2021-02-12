@@ -36,17 +36,8 @@ public class CardManager : MonoBehaviour {
         }
     }
 
-    public bool isInPlay = false;
-    /*
-    public bool IsInPlay {
-        get { return IsInPlay; }
-        set {
-            IsInPlay = value;
-        }
-    }
-    */
-    public bool isInHand = false;
     private void Awake() {
+        
         if (cardAsset != null)
             SetCard();
     }
@@ -56,7 +47,7 @@ public class CardManager : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-
+        
     }
 
     public void SetCard() {
