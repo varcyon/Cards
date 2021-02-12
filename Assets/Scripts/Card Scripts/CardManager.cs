@@ -36,6 +36,28 @@ public class CardManager : MonoBehaviour {
         }
     }
 
+    private bool inPlay = false;
+    public bool Inplay {
+        get { return inPlay; }
+        set { inPlay = value; }
+    }
+    private bool canAttackNow = false;
+    public bool CanAttackNow {
+        get { return canAttackNow; }
+        set { if (Inplay) {
+                canAttackNow = value;
+                cardGlowImage.enabled = value;
+            } }
+    }
+
+    public void TakeDamage(int amount, int healthAfter) {
+        if(amount > 0) {
+            //DamageEffect.CreateDamageEffect(transform.position, amount);
+            currentHealth = healthAfter;
+            health.text = currentHealth.ToString();
+        }
+    }
+
     private void Awake() {
         
         if (cardAsset != null)
