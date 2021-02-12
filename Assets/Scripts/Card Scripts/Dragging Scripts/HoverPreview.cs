@@ -81,8 +81,8 @@ public class HoverPreview: MonoBehaviour
         previewGameObject.transform.localPosition = Vector3.zero;
         previewGameObject.transform.localScale = Vector3.one;
 
-        previewGameObject.transform.DOLocalMove(TargetPosition, 1f).SetEase(Ease.OutQuint);
-        previewGameObject.transform.DOScale(TargetScale, 1f).SetEase(Ease.OutQuint);
+        previewGameObject.transform.DOLocalMove(TargetPosition,0.5f).SetEase(Ease.OutQuint);
+        previewGameObject.transform.DOScale(TargetScale, 0.5f).SetEase(Ease.OutQuint);
     }
 
     void StopThisPreview()

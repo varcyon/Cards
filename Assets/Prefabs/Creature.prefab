@@ -1006,7 +1006,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
-  m_SortingLayerID: -1466374863
+  m_SortingLayerID: 82547601
   m_SortingOrder: 0
   m_TargetDisplay: 0
 --- !u!114 &8706496017739269341
@@ -1790,8 +1790,8 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
-  m_SortingLayerID: -1466374863
-  m_SortingOrder: 0
+  m_SortingLayerID: 1654300845
+  m_SortingOrder: 1
   m_TargetDisplay: 0
 --- !u!114 &8706496018113681418
 MonoBehaviour:
@@ -2145,8 +2145,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TurnThisOffWhenPreviewing: {fileID: 0}
-  TargetPosition: {x: 30, y: 0, z: 0}
-  TargetScale: 1
+  TargetPosition: {x: 40, y: 0, z: 0}
+  TargetScale: 2
   previewGameObject: {fileID: 8706496017768910759}
   ActivateInAwake: 1
 --- !u!65 &8706496018578916788
