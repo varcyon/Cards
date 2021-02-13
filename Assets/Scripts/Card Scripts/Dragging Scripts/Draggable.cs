@@ -12,20 +12,16 @@ public class Draggable : MonoBehaviour {
     private DraggingActions da;
 
     private static Draggable _draggingThis;
-    public static Draggable DraggingThis
-    {
-        get{ return _draggingThis;}
+    public static Draggable DraggingThis {
+        get { return _draggingThis; }
     }
 
-    void Awake()
-    {
+    void Awake() {
         da = GetComponent<DraggingActions>();
     }
 
-    void OnMouseDown()
-    {
-        if (da!=null && da.CanDrag)
-        {
+    void OnMouseDown() {
+        if (da != null && da.CanDrag) {
             dragging = true;
             HoverPreview.PreviewsAllowed = false;
             _draggingThis = this;
@@ -35,32 +31,28 @@ public class Draggable : MonoBehaviour {
         }
     }
 
-    void Update ()
-    {
-        if (dragging)
-        { 
+    void Update() {
+        if (dragging) {
             Vector3 mousePos = MouseInWorldCoords();
-            transform.position = new Vector3(mousePos.x - pointerDisplacement.x, mousePos.y - pointerDisplacement.y, transform.position.z);   
+            transform.position = new Vector3(mousePos.x - pointerDisplacement.x, mousePos.y - pointerDisplacement.y, transform.position.z);
             da.OnDraggingInUpdate();
         }
     }
-	
-    void OnMouseUp()
-    {
-        if (dragging)
-        {
+
+    void OnMouseUp() {
+        if (dragging) {
             dragging = false;
             HoverPreview.PreviewsAllowed = true;
             _draggingThis = null;
             da.OnEndDrag();
         }
-    }   
+    }
 
-    private Vector3 MouseInWorldCoords()
-    {
+    private Vector3 MouseInWorldCoords() {
         var screenMousePos = Input.mousePosition;
         screenMousePos.z = zDisplacement;
         return Camera.main.ScreenToWorldPoint(screenMousePos);
     }
-        
+
+
 }
