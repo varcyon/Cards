@@ -2,34 +2,40 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DragOnTarget : DraggingActions
-{
-    private GameObject targetRoot;
+public class DragOnTarget : DraggingActions {
+    public GameObject targetRoot;
     private GameObject arrow;
     private LineRenderer LR;
+    private CardManager card;
+    private Vector3 cardTargetStart;
+    private Vector3 cardTargetEnd;
+    private Vector3 mousePos;
+    private RaycastHit hit;
     public override void OnDraggingInUpdate() {
-        Vector3 notNormalized = transform.position - targetRoot.transform.GetChild(0).transform.position;
-        Vector3 direction = notNormalized.normalized;
-        float distanceToTarget = (direction * 2.3f).magnitude;
-        if(notNormalized.magnitude > distanceToTarget) {
-            LR.SetPositions(new Vector3[] { targetRoot.transform.position, transform.position - direction * 2.3f });
-            arrow.transform.position = transform.position - 1.5f * direction;
-            float rot_z = Mathf.Atan2(notNormalized.y, notNormalized.x) * Mathf.Rad2Deg;
-            arrow.transform.rotation = Quaternion.Euler(0f, 0f, rot_z - 90);
-        } else {
-            targetRoot.transform.GetChild(0).gameObject.SetActive(false);
+        Ray ray = MouseInWorldCoords();
+        if(Physics.Raycast(ray, out hit)) {
+            cardTargetEnd = hit.point;
+            
+            targetRoot.transform.position = hit.point;
         }
+
+        LR.positionCount = 2;
+        LR.SetPositions(new Vector3[] { cardTargetStart, cardTargetEnd });
     }
 
-        
+
 
     public override void OnEndDrag() {
-        transform.localPosition = new Vector3(0f, 0f, -1f);
-        targetRoot.transform.GetChild(0).gameObject.SetActive(false);
+        LR.positionCount = 0;
+        targetRoot.SetActive(false);
+        targetRoot.transform.position = transform.position;
     }
 
     public override void OnStartDrag() {
-        targetRoot.transform.GetChild(0).gameObject.SetActive(true);
+        cardTargetStart = transform.position;
+        cardTargetStart.z = -16f;
+        targetRoot.SetActive(true);
+
     }
 
     protected override bool DragSuccessful() {
@@ -37,20 +43,13 @@ public class DragOnTarget : DraggingActions
     }
 
     private void Awake() {
-        targetRoot = GameObject.FindGameObjectWithTag("TargetGraphics");
-        targetRoot.transform.GetChild(0).gameObject.SetActive(false);
-        LR = targetRoot.GetComponentInChildren<LineRenderer>();
-        arrow = targetRoot.transform.GetChild(0).transform.GetChild(0).gameObject;
-        
+        targetRoot.SetActive(false);
+        card = GetComponent<CardManager>();
+        LR = GetComponent<LineRenderer>();
     }
-    void Start()
-    {
-        
-    }
+    public Ray MouseInWorldCoords() {
+        Vector3 screenMousePos = Input.mousePosition;
+        return Camera.main.ScreenPointToRay(screenMousePos);
 
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

@@ -24,6 +24,7 @@ public class CardManager : MonoBehaviour {
 
     public Image cardGlowImage;
 
+    
     private bool canBePlayedNow = false;
     public bool CanBePlayedNow {
         get {
@@ -36,15 +37,18 @@ public class CardManager : MonoBehaviour {
         }
     }
 
-    private bool inPlay = false;
+    public bool inPlay = false;
+    public bool targeting = false;
+    /*
     public bool Inplay {
         get { return inPlay; }
         set { inPlay = value; }
     }
+    */
     private bool canAttackNow = false;
     public bool CanAttackNow {
         get { return canAttackNow; }
-        set { if (Inplay) {
+        set { if (inPlay) {
                 canAttackNow = value;
                 cardGlowImage.enabled = value;
             } }

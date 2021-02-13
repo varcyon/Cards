@@ -10,14 +10,17 @@ public class Draggable : MonoBehaviour {
     private float zDisplacement;
 
     private DraggingActions da;
-
+    private DragOnTarget dt;
     private static Draggable _draggingThis;
     public static Draggable DraggingThis {
         get { return _draggingThis; }
     }
+    private CardManager card;
 
     void Awake() {
         da = GetComponent<DraggingActions>();
+        dt = GetComponent<DragOnTarget>();
+        card = GetComponent<CardManager>();
     }
 
     void OnMouseDown() {
@@ -29,13 +32,19 @@ public class Draggable : MonoBehaviour {
             zDisplacement = -Camera.main.transform.position.z + transform.position.z;
             pointerDisplacement = -transform.position + MouseInWorldCoords();
         }
+        if(dragging && card.inPlay) {
+            dt.OnStartDrag();
+        }
     }
 
     void Update() {
-        if (dragging) {
+        if (dragging && !card.inPlay) {
             Vector3 mousePos = MouseInWorldCoords();
             transform.position = new Vector3(mousePos.x - pointerDisplacement.x, mousePos.y - pointerDisplacement.y, transform.position.z);
-            da.OnDraggingInUpdate();
+            //da.OnDraggingInUpdate();
+        }
+        if(dragging && card.inPlay) {
+            dt.OnDraggingInUpdate();
         }
     }
 
@@ -45,10 +54,11 @@ public class Draggable : MonoBehaviour {
             HoverPreview.PreviewsAllowed = true;
             _draggingThis = null;
             da.OnEndDrag();
+            dt.OnEndDrag();
         }
     }
 
-    private Vector3 MouseInWorldCoords() {
+    public Vector3 MouseInWorldCoords() {
         var screenMousePos = Input.mousePosition;
         screenMousePos.z = zDisplacement;
         return Camera.main.ScreenToWorldPoint(screenMousePos);
