@@ -2228,6 +2228,7 @@ MonoBehaviour:
   cardType: {fileID: 6893256621872228687}
   cardDescription: {fileID: 6893256622529898206}
   cardGlowImage: {fileID: 0}
+  isMine: 0
   inPlay: 0
   targeting: 0
 --- !u!1 &6893256622764147632
@@ -2630,7 +2631,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6893256622999290582}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -65, z: -30}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 6893256622349508460}
@@ -2663,6 +2664,7 @@ MonoBehaviour:
   cardType: {fileID: 6893256623284653635}
   cardDescription: {fileID: 6893256621490421485}
   cardGlowImage: {fileID: 6893256621417362270}
+  isMine: 0
   inPlay: 0
   targeting: 0
 --- !u!114 &6893256622999290576

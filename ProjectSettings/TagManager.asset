@@ -6,6 +6,12 @@ TagManager:
   tags:
   - TargetGraphics
   - Table
+  - PlayerCreatureSlot1
+  - PlayerCreatureSlot2
+  - PlayerCreatureSlot3
+  - PlayerCreatureSlot4
+  - PlayerCreatureSlot5
+  - PlayerCreatureSlot6
   layers:
   - Default
   - TransparentFX
