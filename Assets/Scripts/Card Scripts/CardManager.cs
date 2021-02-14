@@ -36,7 +36,11 @@ public class CardManager : MonoBehaviour {
             cardGlowImage.enabled = value;
         }
     }
-
+    public bool isMine = false;
+    public bool IsMine {
+        get { return isMine; }
+        set { isMine = value; }
+    }
     public bool inPlay = false;
     public bool targeting = false;
     /*

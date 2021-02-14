@@ -32,24 +32,24 @@ public class Draggable : MonoBehaviour {
             zDisplacement = -Camera.main.transform.position.z + transform.position.z;
             pointerDisplacement = -transform.position + MouseInWorldCoords();
         }
-        if(dragging && card.inPlay) {
+        if(dragging && card.inPlay && card.isMine) {
             dt.OnStartDrag();
         }
     }
 
     void Update() {
-        if (dragging && !card.inPlay) {
+        if (dragging && card.isMine && !card.inPlay) {
             Vector3 mousePos = MouseInWorldCoords();
             transform.position = new Vector3(mousePos.x - pointerDisplacement.x, mousePos.y - pointerDisplacement.y, transform.position.z);
             //da.OnDraggingInUpdate();
         }
-        if(dragging && card.inPlay) {
+        if(dragging && card.inPlay && card.isMine) {
             dt.OnDraggingInUpdate();
         }
     }
 
     void OnMouseUp() {
-        if (dragging) {
+        if (dragging && card.isMine) {
             dragging = false;
             HoverPreview.PreviewsAllowed = true;
             _draggingThis = null;
