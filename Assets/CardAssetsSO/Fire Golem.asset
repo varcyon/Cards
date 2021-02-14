@@ -10,16 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a7a27a9723ac72b4698052455ce68b84, type: 3}
-  m_Name: Goblin
+  m_Name: Fire Golem
   m_EditorClassIdentifier: 
   characterAsset: {fileID: 0}
-  Desctription: This is a goblin
-  CastCost: 4
-  CardImage: {fileID: 21300000, guid: ddd71c5bdfade944c8bf233172439003, type: 3}
+  Desctription: 
+  CastCost: 5
+  CardImage: {fileID: 21300000, guid: 6ef460bd5bbb1b340b472afde8429d6c, type: 3}
   CardType: 1
-  MaxHealth: 4
-  Attack: 2
-  AttackPerTurn: 2
+  MaxHealth: 2
+  Attack: 3
+  AttackPerTurn: 1
   Charge: 0
   CreatureScriptName: 
   specialCreatureAmount: 0

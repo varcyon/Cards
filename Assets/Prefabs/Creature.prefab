@@ -2283,8 +2283,8 @@ MonoBehaviour:
   faceFrame: {fileID: 8706496017906795253}
   faceCardImage: {fileID: 8706496018041022052}
   castCost: {fileID: 0}
-  attack: {fileID: 0}
-  health: {fileID: 0}
+  attack: {fileID: 6489549680069153646}
+  health: {fileID: 2733962281738446095}
   cardName: {fileID: 8706496017854007291}
   cardType: {fileID: 0}
   cardDescription: {fileID: 0}

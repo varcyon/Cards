@@ -68,11 +68,11 @@ public class CardManager : MonoBehaviour {
 
     private void Awake() {
         
-        if (cardAsset != null)
-            SetCard();
     }
     void Start() {
 
+        if (cardAsset != null)
+            SetCard();
     }
 
     // Update is called once per frame
