@@ -19,6 +19,9 @@ public class BattleStageManager : MonoBehaviour {
     }
 
     private void Start() {
+        for (int i = 0; i < 6; i++) {
+            BM.enemyCreatureSlots[i] = null;
+        }
         int index = 0;
         foreach (CardAsset card in BM.playerCreatureSlots) {
             if (card != null) {
@@ -36,11 +39,14 @@ public class BattleStageManager : MonoBehaviour {
     }
 
     private void SetEnemyCreature() {
-        int slot = UnityEngine.Random.Range(1, 7);
+        int slot = UnityEngine.Random.Range(0, 6);
         if (BM.enemyCreatureSlots[slot] == null) {
-            BM.enemyCreatureSlots[slot] = BM.enemyCreatures[UnityEngine.Random.Range(0, BM.enemyCreatures.Count - 1)];
+            int randomCreature = UnityEngine.Random.Range(0, BM.enemyCreatures.Count);
+            BM.enemyCreatureSlots[slot] = BM.enemyCreatures[randomCreature];
+            GameObject eGo = Instantiate(BM.creatureCard, enemyCreatureSlotLocs[slot]);
+            eGo.GetComponent<CardManager>().cardAsset = BM.enemyCreatureSlots[slot];
+            eGo.GetComponent<CardManager>().SetCard();
             numOfCreaturesSet++;
         } 
-
     }
 }

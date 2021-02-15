@@ -70,7 +70,6 @@ public class CardManager : MonoBehaviour {
         
     }
     void Start() {
-
         if (cardAsset != null)
             SetCard();
     }
