@@ -24,7 +24,7 @@ public class CardManager : MonoBehaviour {
 
     public Image cardGlowImage;
 
-    
+    public int cardSlot;
     private bool canBePlayedNow = false;
     public bool CanBePlayedNow {
         get {

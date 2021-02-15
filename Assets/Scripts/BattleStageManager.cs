@@ -9,8 +9,10 @@ public class BattleStageManager : MonoBehaviour {
     private List<Transform> playerCreatureSlotLocs = new List<Transform>(6);
     [SerializeField]
     private List<Transform> enemyCreatureSlotLocs = new List<Transform>(6);
-    public int numOfCreatures=0;
-    public int numOfCreaturesSet=0;
+    public int numOfCreatures = 0;
+    public int numOfCreaturesSet = 0;
+    public bool creaturesSet;
+    public bool allEnemiesKilled;
     private void Awake() {
         if (i != this) {
             i = this;
@@ -33,9 +35,37 @@ public class BattleStageManager : MonoBehaviour {
         }
 
         numOfCreatures = UnityEngine.Random.Range(1, 7);
-        while(numOfCreaturesSet < numOfCreatures) {
+        while (numOfCreaturesSet < numOfCreatures) {
             SetEnemyCreature();
         }
+        creaturesSet = true;
+        if (creaturesSet) {
+            RunBattle();
+        }
+    }
+
+    private void RunBattle() {
+       allEnemiesKilled = CheckIfThereAreEnemyCreatures();
+        int attackingPC = 0;
+        int attackingEC = 0;
+        while (!allEnemiesKilled) {
+
+        }
+
+
+    }
+
+    private bool CheckIfThereAreEnemyCreatures() {
+        bool a = false;
+        foreach (CardAsset item in BM.enemyCreatureSlots) {
+            if (item == null) {
+                a= true;
+            } else {
+                a = false;
+                break;
+            }
+        }
+        return a;
     }
 
     private void SetEnemyCreature() {
@@ -47,6 +77,6 @@ public class BattleStageManager : MonoBehaviour {
             eGo.GetComponent<CardManager>().cardAsset = BM.enemyCreatureSlots[slot];
             eGo.GetComponent<CardManager>().SetCard();
             numOfCreaturesSet++;
-        } 
+        }
     }
 }
