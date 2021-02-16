@@ -16,17 +16,17 @@ MonoBehaviour:
   playerDeck: []
   playerHand: []
   playerCreatureSlots:
-  - {fileID: 11400000, guid: c9d0384a936756440a4e90ee13bfd269, type: 2}
+  - {fileID: 0}
   - {fileID: 0}
   - {fileID: 11400000, guid: e453ad4b0f128e24787ee9407dcb7f06, type: 2}
   - {fileID: 0}
   - {fileID: 11400000, guid: 558720ac21abdeb4b9c1d80115be498a, type: 2}
   - {fileID: 11400000, guid: 5fafb2895e8bb094887308ae3582eeed, type: 2}
   enemyCreatureSlots:
-  - {fileID: 11400000, guid: 5fafb2895e8bb094887308ae3582eeed, type: 2}
+  - {fileID: 0}
+  - {fileID: 11400000, guid: c9d0384a936756440a4e90ee13bfd269, type: 2}
   - {fileID: 0}
   - {fileID: 0}
-  - {fileID: 11400000, guid: e453ad4b0f128e24787ee9407dcb7f06, type: 2}
   - {fileID: 0}
   - {fileID: 0}
   enemyCreatures:

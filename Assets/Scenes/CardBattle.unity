@@ -1231,6 +1231,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Card
       objectReference: {fileID: 0}
+    - target: {fileID: 6893256622999290591, guid: ff62472762317904abb383f300628415, type: 3}
+      propertyPath: isMine
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8877877106507260289, guid: ff62472762317904abb383f300628415, type: 3}
       propertyPath: m_IsActive
       value: 1

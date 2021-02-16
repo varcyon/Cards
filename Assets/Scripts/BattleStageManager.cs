@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -38,28 +39,58 @@ public class BattleStageManager : MonoBehaviour {
         while (numOfCreaturesSet < numOfCreatures) {
             SetEnemyCreature();
         }
-        creaturesSet = true;
+        Debug.Log( FindEnemyTarget());
+        Debug.Log(  FindPlayerAttack());
+        // creaturesSet = true;
         if (creaturesSet) {
             RunBattle();
         }
     }
 
+
     private void RunBattle() {
-       allEnemiesKilled = CheckIfThereAreEnemyCreatures();
+        allEnemiesKilled = CheckIfThereAreEnemyCreatures();
         int attackingPC = 0;
         int attackingEC = 0;
         while (!allEnemiesKilled) {
-
+            FindEnemyTarget();
+            FindPlayerAttack();
         }
 
 
+    }
+
+    private int FindPlayerAttack() {
+        int q = -1;
+        for (int i = 0; i < BM.playerCreatureSlots.Count; i++) {
+            if (BM.playerCreatureSlots[i] != null) {
+                q = i;
+                break;
+            }
+        }
+        return q;
+
+
+    }
+
+    private int FindEnemyTarget() {
+        //randomlly check a slot enemy slot 
+        int index = UnityEngine.Random.Range(0, BM.enemyCreatureSlots.Count);
+        Debug.Log("Random Select index: " + index);
+        CardAsset e = BM.enemyCreatureSlots[index];
+        //check if its null
+        if (e == null) {
+            //if its not
+            FindEnemyTarget();
+        } 
+        return index;
     }
 
     private bool CheckIfThereAreEnemyCreatures() {
         bool a = false;
         foreach (CardAsset item in BM.enemyCreatureSlots) {
             if (item == null) {
-                a= true;
+                a = true;
             } else {
                 a = false;
                 break;
@@ -76,6 +107,7 @@ public class BattleStageManager : MonoBehaviour {
             GameObject eGo = Instantiate(BM.creatureCard, enemyCreatureSlotLocs[slot]);
             eGo.GetComponent<CardManager>().cardAsset = BM.enemyCreatureSlots[slot];
             eGo.GetComponent<CardManager>().SetCard();
+            eGo.GetComponent<CardManager>().cardSlot = slot;
             numOfCreaturesSet++;
         }
     }
