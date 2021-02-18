@@ -47,9 +47,11 @@ public class BattleStageManager : MonoBehaviour {
 
         int pCreatureToAttack = FindPlayerAttack();
         Debug.Log("Attacking: "+pCreatureToAttack);
-        
+
+        playerCreatureSlotLocs[pCreatureToAttack].GetChild(0).GetComponent<CardManager>().IsActive = true;
         Debug.Log(BM.playerCreatureSlots[pCreatureToAttack].GetComponent<CardManager>().cardAsset.name + " is ready to attack!");
-        
+
+        enemyCreatureSlotLocs[targetedEnemy].GetChild(0).GetComponent<CardManager>().IsTargeted = true;
         Debug.Log(BM.enemyCreatureSlots[targetedEnemy].GetComponent<CardManager>().cardAsset.name + " is being targeted!");
         // creaturesSet = true;
         if (creaturesSet) {
