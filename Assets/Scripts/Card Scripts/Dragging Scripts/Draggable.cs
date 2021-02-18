@@ -24,7 +24,7 @@ public class Draggable : MonoBehaviour {
     }
 
     void OnMouseDown() {
-        if (da != null && da.CanDrag) {
+        if (da != null && card.IsMine) {
             dragging = true;
             HoverPreview.PreviewsAllowed = false;
             _draggingThis = this;
@@ -32,20 +32,24 @@ public class Draggable : MonoBehaviour {
             zDisplacement = -Camera.main.transform.position.z + transform.position.z;
             pointerDisplacement = -transform.position + MouseInWorldCoords();
         }
+        /*
         if(dragging && card.inPlay && card.isMine) {
             dt.OnStartDrag();
         }
+        */
     }
 
     void Update() {
-        if (dragging && card.isMine && !card.inPlay) {
+        if (dragging && card.isMine && !card.Inplay) {
             Vector3 mousePos = MouseInWorldCoords();
             transform.position = new Vector3(mousePos.x - pointerDisplacement.x, mousePos.y - pointerDisplacement.y, transform.position.z);
-            //da.OnDraggingInUpdate();
+            da.OnDraggingInUpdate();
         }
+        /*
         if(dragging && card.inPlay && card.isMine) {
             dt.OnDraggingInUpdate();
         }
+        */
     }
 
     void OnMouseUp() {
@@ -54,7 +58,7 @@ public class Draggable : MonoBehaviour {
             HoverPreview.PreviewsAllowed = true;
             _draggingThis = null;
             da.OnEndDrag();
-            dt.OnEndDrag();
+            //dt.OnEndDrag();
         }
     }
 

@@ -23,6 +23,8 @@ public class CardManager : MonoBehaviour {
     private string currentCardType;
 
     public Image cardGlowImage;
+    public Image cardTargetedGlow;
+    public Image cardActiveGlow;
 
     public int cardSlot;
     private bool canBePlayedNow = false;
@@ -41,23 +43,36 @@ public class CardManager : MonoBehaviour {
         get { return isMine; }
         set { isMine = value; }
     }
-    public bool inPlay = false;
+    private bool inPlay = false;
     public bool targeting = false;
-    /*
     public bool Inplay {
         get { return inPlay; }
         set { inPlay = value; }
     }
-    */
-    private bool canAttackNow = false;
-    public bool CanAttackNow {
-        get { return canAttackNow; }
+    private bool canAttack = false;
+    public bool CanAttack {
+        get { return canAttack; }
         set { if (inPlay) {
-                canAttackNow = value;
-                cardGlowImage.enabled = value;
+                canAttack = value;
             } }
     }
 
+    public bool isTargeted = false;
+    public bool IsTargeted {
+        get { return isTargeted; }
+        set { 
+            isTargeted = value;
+            cardTargetedGlow.enabled = value;
+        }
+    }
+    public bool isActive = false;
+    public bool IsActive {
+        get { return isActive; }
+        set {
+            isActive = value;
+            cardActiveGlow.enabled = value;
+        }
+    }
     public void TakeDamage(int amount, int healthAfter) {
         if(amount > 0) {
             //DamageEffect.CreateDamageEffect(transform.position, amount);
@@ -70,7 +85,7 @@ public class CardManager : MonoBehaviour {
         
     }
     void Start() {
-        if (cardAsset != null)
+        if (cardAsset != null && !Inplay )
             SetCard();
     }
 

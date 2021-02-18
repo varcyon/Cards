@@ -9,10 +9,10 @@ public class BattleManagerSO : ScriptableObject
     public List<CardAsset> playerDeck = new List<CardAsset>();
     public List<CardAsset> playerHand = new List<CardAsset>();
 
-    public List<CardAsset> playerCreatureSlots = new List<CardAsset>(6);
-    public List<CardAsset> enemyCreatureSlots = new List<CardAsset>(6);
+    public List<GameObject> playerCreatureSlots = new List<GameObject>(6);
+    public List<GameObject> enemyCreatureSlots = new List<GameObject>(6);
 
-    public List<CardAsset> enemyCreatures = new List<CardAsset>();
+    public List<CardAsset> Creatures = new List<CardAsset>();
 
     public GameObject creatureCard;
     public GameObject card;

@@ -18,18 +18,18 @@ MonoBehaviour:
   playerCreatureSlots:
   - {fileID: 0}
   - {fileID: 0}
-  - {fileID: 11400000, guid: e453ad4b0f128e24787ee9407dcb7f06, type: 2}
   - {fileID: 0}
-  - {fileID: 11400000, guid: 558720ac21abdeb4b9c1d80115be498a, type: 2}
-  - {fileID: 11400000, guid: 5fafb2895e8bb094887308ae3582eeed, type: 2}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   enemyCreatureSlots:
-  - {fileID: 0}
-  - {fileID: 11400000, guid: c9d0384a936756440a4e90ee13bfd269, type: 2}
-  - {fileID: 0}
+  - {fileID: 8706496018578916790, guid: 7edbe3e873369b84eb50c9678ba416f0, type: 3}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  enemyCreatures:
+  - {fileID: 0}
+  - {fileID: 0}
+  Creatures:
   - {fileID: 11400000, guid: 5fafb2895e8bb094887308ae3582eeed, type: 2}
   - {fileID: 11400000, guid: 0614b096d6712944f91bed3c1c96c3c4, type: 2}
   - {fileID: 11400000, guid: c9d0384a936756440a4e90ee13bfd269, type: 2}

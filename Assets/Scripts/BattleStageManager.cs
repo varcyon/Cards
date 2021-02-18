@@ -10,8 +10,11 @@ public class BattleStageManager : MonoBehaviour {
     private List<Transform> playerCreatureSlotLocs = new List<Transform>(6);
     [SerializeField]
     private List<Transform> enemyCreatureSlotLocs = new List<Transform>(6);
-    public int numOfCreatures = 0;
-    public int numOfCreaturesSet = 0;
+    public int numOfEnemyCreatures = 0;
+    public int numOfEnemyCreaturesSet = 0;
+    public int numOfPlayerCreatures = 0;
+    public int numOfPlayerCreaturesSet = 0;
+
     public bool creaturesSet;
     public bool allEnemiesKilled;
     private void Awake() {
@@ -24,23 +27,30 @@ public class BattleStageManager : MonoBehaviour {
     private void Start() {
         for (int i = 0; i < 6; i++) {
             BM.enemyCreatureSlots[i] = null;
-        }
-        int index = 0;
-        foreach (CardAsset card in BM.playerCreatureSlots) {
-            if (card != null) {
+            BM.playerCreatureSlots[i] = null;
 
-                GameObject go = Instantiate(BM.creatureCard, playerCreatureSlotLocs[index]);
-                go.GetComponent<CardManager>().cardAsset = BM.playerCreatureSlots[index];
-            }
-            index++;
         }
+        
 
-        numOfCreatures = UnityEngine.Random.Range(1, 7);
-        while (numOfCreaturesSet < numOfCreatures) {
+        numOfEnemyCreatures = UnityEngine.Random.Range(1, 7);
+        while (numOfEnemyCreaturesSet < numOfEnemyCreatures) {
             SetEnemyCreature();
+            Debug.Log("e " +numOfEnemyCreaturesSet);
         }
-        Debug.Log( FindEnemyTarget());
-        Debug.Log(  FindPlayerAttack());
+        numOfPlayerCreatures = UnityEngine.Random.Range(1, 7);
+        while (numOfPlayerCreaturesSet < numOfPlayerCreatures) {
+            SetPlayerCreature();
+            Debug.Log("p "+numOfPlayerCreaturesSet);
+        }
+        int targetedEnemy = FindEnemyTarget();
+        Debug.Log("Targeted: "+targetedEnemy);
+
+        int pCreatureToAttack = FindPlayerAttack();
+        Debug.Log("Attacking: "+pCreatureToAttack);
+        
+        Debug.Log(BM.playerCreatureSlots[pCreatureToAttack].GetComponent<CardManager>().cardAsset.name + " is ready to attack!");
+        
+        Debug.Log(BM.enemyCreatureSlots[targetedEnemy].GetComponent<CardManager>().cardAsset.name + " is being targeted!");
         // creaturesSet = true;
         if (creaturesSet) {
             RunBattle();
@@ -52,10 +62,10 @@ public class BattleStageManager : MonoBehaviour {
         allEnemiesKilled = CheckIfThereAreEnemyCreatures();
         int attackingPC = 0;
         int attackingEC = 0;
-        while (!allEnemiesKilled) {
+        //while (!allEnemiesKilled) {
             FindEnemyTarget();
             FindPlayerAttack();
-        }
+       // }
 
 
     }
@@ -74,21 +84,30 @@ public class BattleStageManager : MonoBehaviour {
     }
 
     private int FindEnemyTarget() {
+        int index = 0;
+        do {
+            index = UnityEngine.Random.Range(0, BM.enemyCreatureSlots.Count);
+
+        } while (BM.enemyCreatureSlots[index] == null);
+        return index;
+        /*
         //randomlly check a slot enemy slot 
-        int index = UnityEngine.Random.Range(0, BM.enemyCreatureSlots.Count);
-        Debug.Log("Random Select index: " + index);
-        CardAsset e = BM.enemyCreatureSlots[index];
+       Debug.Log("Random Select index: " + index);
+        GameObject e = BM.enemyCreatureSlots[index];
         //check if its null
         if (e == null) {
             //if its not
             FindEnemyTarget();
-        } 
+        } else {
         return index;
+        }
+        return -1;
+        */
     }
 
     private bool CheckIfThereAreEnemyCreatures() {
         bool a = false;
-        foreach (CardAsset item in BM.enemyCreatureSlots) {
+        foreach (GameObject item in BM.enemyCreatureSlots) {
             if (item == null) {
                 a = true;
             } else {
@@ -102,13 +121,33 @@ public class BattleStageManager : MonoBehaviour {
     private void SetEnemyCreature() {
         int slot = UnityEngine.Random.Range(0, 6);
         if (BM.enemyCreatureSlots[slot] == null) {
-            int randomCreature = UnityEngine.Random.Range(0, BM.enemyCreatures.Count);
-            BM.enemyCreatureSlots[slot] = BM.enemyCreatures[randomCreature];
-            GameObject eGo = Instantiate(BM.creatureCard, enemyCreatureSlotLocs[slot]);
-            eGo.GetComponent<CardManager>().cardAsset = BM.enemyCreatureSlots[slot];
-            eGo.GetComponent<CardManager>().SetCard();
-            eGo.GetComponent<CardManager>().cardSlot = slot;
-            numOfCreaturesSet++;
+            int randomCreature = UnityEngine.Random.Range(0, BM.Creatures.Count);
+            BM.enemyCreatureSlots[slot] = Instantiate( BM.creatureCard);
+            BM.enemyCreatureSlots[slot].GetComponent<CardManager>().cardAsset = BM.Creatures[randomCreature];
+            BM.enemyCreatureSlots[slot].GetComponent<CardManager>().SetCard();
+            BM.enemyCreatureSlots[slot].GetComponent<CardManager>().cardSlot = slot;
+            BM.enemyCreatureSlots[slot].GetComponent<CardManager>().Inplay = true ;
+            Instantiate(BM.enemyCreatureSlots[slot], enemyCreatureSlotLocs[slot]);
+            numOfEnemyCreaturesSet++;
         }
     }
+
+
+    private void SetPlayerCreature() {
+        int slot = UnityEngine.Random.Range(0, 6);
+        if (BM.playerCreatureSlots[slot] == null) {
+            int randomCreature = UnityEngine.Random.Range(0, BM.Creatures.Count);
+            BM.playerCreatureSlots[slot] = Instantiate( BM.creatureCard);
+            BM.playerCreatureSlots[slot].GetComponent<CardManager>().cardAsset = BM.Creatures[randomCreature];
+            BM.playerCreatureSlots[slot].GetComponent<CardManager>().SetCard();
+            BM.playerCreatureSlots[slot].GetComponent<CardManager>().cardSlot = slot;
+            BM.playerCreatureSlots[slot].GetComponent<CardManager>().Inplay = true;
+            BM.playerCreatureSlots[slot].GetComponent<CardManager>().IsMine = true;
+            BM.playerCreatureSlots[slot].GetComponent<CardManager>().CanAttack = true;
+            Instantiate(BM.playerCreatureSlots[slot], playerCreatureSlotLocs[slot]);
+            numOfPlayerCreaturesSet++;
+
+        }
+    }
+
 }
