@@ -1,3 +1,4 @@
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -17,7 +18,7 @@ public class CardManager : MonoBehaviour {
     public TMP_Text cardDescription;
 
 
-    private int currentAttack;
+    public int currentAttack;
     private int currentHealth;
     private int currentCastCost;
     private string currentCardType;
@@ -52,15 +53,17 @@ public class CardManager : MonoBehaviour {
     private bool canAttack = false;
     public bool CanAttack {
         get { return canAttack; }
-        set { if (inPlay) {
+        set {
+            if (inPlay) {
                 canAttack = value;
-            } }
+            }
+        }
     }
 
     public bool isTargeted = false;
     public bool IsTargeted {
         get { return isTargeted; }
-        set { 
+        set {
             isTargeted = value;
             cardTargetedGlow.enabled = value;
         }
@@ -73,25 +76,38 @@ public class CardManager : MonoBehaviour {
             cardActiveGlow.enabled = value;
         }
     }
-    public void TakeDamage(int amount, int healthAfter) {
-        if(amount > 0) {
+    public void TakeDamage(int amount) {
+        if (amount > 0) {
             //DamageEffect.CreateDamageEffect(transform.position, amount);
-            currentHealth = healthAfter;
+            currentHealth -= amount;
             health.text = currentHealth.ToString();
+            if (currentHealth <= 0) {
+                StartCoroutine(Death());
+            }
         }
     }
-
+    public IEnumerator Death() {
+        yield return new WaitForSecondsRealtime(1f);
+        print(cardName + " dies...");
+        Destroy(this.gameObject);
+    }
     private void Awake() {
-        
+        if (cardAsset != null && !Inplay)
+            SetCard();
     }
     void Start() {
-        if (cardAsset != null && !Inplay )
-            SetCard();
+
     }
 
     // Update is called once per frame
     void Update() {
-        
+        if (currentHealth > cardAsset.MaxHealth) {
+            health.color = Color.green;
+        }
+        if (currentHealth < cardAsset.MaxHealth) {
+            health.color = Color.red;
+        }
+
     }
 
     public void SetCard() {
