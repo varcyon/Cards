@@ -32,7 +32,7 @@ public class BattleStageManager : MonoBehaviour {
         }
 
     }
-
+    private float delayTime = 1f;
     private void Start() {
         for (int i = 0; i < 6; i++) {
             BM.enemyCreatureSlots[i] = null;
@@ -76,7 +76,7 @@ public class BattleStageManager : MonoBehaviour {
                     attackingCreature.IsActive = true;
                     defendingCreature.IsTargeted = true;
                     print(attackingCreature.cardName.text + " is attacking " + defendingCreature.cardName.text);
-                    yield return new WaitForSecondsRealtime(2f);
+                    yield return new WaitForSecondsRealtime(delayTime);
 
                     print("PLAYERS: " + defendingCreature.cardName.text + " takes " + attackingCreature.currentAttack + " damage.");
                     print("ENEMIES: " + attackingCreature.cardName.text + " takes " + defendingCreature.currentAttack + " damage.");
@@ -89,7 +89,7 @@ public class BattleStageManager : MonoBehaviour {
 
                 }
                 combatTurn = Turn.Enemy;
-                yield return new WaitForSecondsRealtime(2f);
+                yield return new WaitForSecondsRealtime(delayTime);
             }
 
             if (combatTurn == Turn.Enemy) {
@@ -105,7 +105,7 @@ public class BattleStageManager : MonoBehaviour {
                     attackingCreature.IsActive = true;
                     defendingCreature.IsTargeted = true;
                     print(attackingCreature.cardName.text + " is attacking " + defendingCreature.cardName.text);
-                    yield return new WaitForSecondsRealtime(2f);
+                    yield return new WaitForSecondsRealtime(delayTime);
 
                     print("PLAYERS: " + defendingCreature.cardName.text + " takes " + attackingCreature.currentAttack + " damage.");
                     print("ENEMIES: " + attackingCreature.cardName.text + " takes " + defendingCreature.currentAttack + " damage.");
@@ -119,6 +119,7 @@ public class BattleStageManager : MonoBehaviour {
                 if (AnyAttackers(BM.enemyCreatureSlots) && !AnyDefenders(BM.playerCreatureSlots)) {
                     attacker = FindAttacker(BM.enemyCreatureSlots);
                     CardManager attackingCreature = BM.enemyCreatureSlots[attacker].GetComponent<CardManager>();
+                    yield return new WaitForSecondsRealtime(delayTime);
                     print("ATTACK PLAYER");
                     BM.PlayerTakeDamage(attackingCreature.currentAttack);
                     print(attackingCreature.cardName.text + " deals " + attackingCreature.currentAttack + " damage to the player");
@@ -130,7 +131,7 @@ public class BattleStageManager : MonoBehaviour {
 
                 combatTurn = Turn.Player;
 
-                yield return new WaitForSecondsRealtime(2f);
+                yield return new WaitForSecondsRealtime(delayTime);
             }
         }
         //   Debug.Log(AnyAttackers(BM.playerCreatureSlots) + ":" + AnyDefenders(BM.enemyCreatureSlots));

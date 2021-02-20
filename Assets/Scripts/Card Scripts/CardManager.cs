@@ -79,8 +79,8 @@ public class CardManager : MonoBehaviour {
 
     private bool isAlive = true;
     public bool IsAlive {
-        get { return isActive; }
-        set { isActive = value; }
+        get { return isAlive; }
+        set { isAlive = value; }
     }
     public void TakeDamage(int amount) {
         if (amount > 0) {
