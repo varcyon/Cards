@@ -5,7 +5,7 @@ using UnityEngine;
 public class BattleManagerSO : ScriptableObject
 {
     public int playerHealth = 30;
-    
+    public int startingPlayerHealth = 30;
     public List<CardAsset> playerDeck = new List<CardAsset>();
     public List<CardAsset> playerHand = new List<CardAsset>();
 
@@ -17,5 +17,7 @@ public class BattleManagerSO : ScriptableObject
     public GameObject creatureCard;
     public GameObject card;
 
-
+    public void PlayerTakeDamage(int amount) {
+        playerHealth -= amount;
+    }
 }

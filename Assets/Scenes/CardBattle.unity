@@ -236,6 +236,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 186241687, guid: 1d41df1c3aebd77418390136396570e3, type: 3}
   m_PrefabInstance: {fileID: 5808087503231885554}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &209139355 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7174946921696908724, guid: b2ad939ce68077d47bd64dc69e0cb8b6, type: 3}
+  m_PrefabInstance: {fileID: 2695107013260964861}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &315565930 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 315565930, guid: 1d41df1c3aebd77418390136396570e3, type: 3}
@@ -781,6 +792,10 @@ PrefabInstance:
       propertyPath: handLoc
       value: 
       objectReference: {fileID: 334098259}
+    - target: {fileID: 2074707027743269378, guid: 8a4e1a47a61719347ad6facf897d0a7d, type: 3}
+      propertyPath: playerHealth
+      value: 
+      objectReference: {fileID: 209139355}
     - target: {fileID: 2074707027743269378, guid: 8a4e1a47a61719347ad6facf897d0a7d, type: 3}
       propertyPath: enemyCreatureSlotLocs.Array.data[0]
       value: 
