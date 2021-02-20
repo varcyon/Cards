@@ -76,6 +76,12 @@ public class CardManager : MonoBehaviour {
             cardActiveGlow.enabled = value;
         }
     }
+
+    private bool isAlive = true;
+    public bool IsAlive {
+        get { return isActive; }
+        set { isActive = value; }
+    }
     public void TakeDamage(int amount) {
         if (amount > 0) {
             //DamageEffect.CreateDamageEffect(transform.position, amount);
@@ -87,8 +93,9 @@ public class CardManager : MonoBehaviour {
         }
     }
     public IEnumerator Death() {
+        IsAlive = false;
+        print(cardName.text + " dies...");
         yield return new WaitForSecondsRealtime(1f);
-        print(cardName + " dies...");
         Destroy(this.gameObject);
     }
     private void Awake() {

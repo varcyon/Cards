@@ -57,11 +57,12 @@ public class BattleStageManager : MonoBehaviour {
         // allEnemiesKilled = CheckIfThereAreEnemyCreatures();
         int target;
         int attacker;
-        while (AnyAttackers(BM.playerCreatureSlots) && AnyAttackers(BM.enemyCreatureSlots)) {
 
+        while (AnyAttackers(BM.playerCreatureSlots) && AnyDefenders(BM.enemyCreatureSlots)|| AnyAttackers(BM.enemyCreatureSlots) && AnyDefenders(BM.playerCreatureSlots) || AnyAttackers(BM.enemyCreatureSlots)) {
 
             if (combatTurn == Turn.Player) {
-                if (AnyAttackers(BM.playerCreatureSlots)) {
+                Debug.Log("Is Player Turn");
+                if (AnyAttackers(BM.playerCreatureSlots) && AnyDefenders(BM.enemyCreatureSlots)) {
 
                     target = FindTarget(BM.enemyCreatureSlots);
                     attacker = FindAttacker(BM.playerCreatureSlots);
@@ -71,12 +72,13 @@ public class BattleStageManager : MonoBehaviour {
 
                     attackingCreature.IsActive = true;
                     defendingCreature.IsTargeted = true;
-                    print(attackingCreature.cardName + " is attacking " + defendingCreature.cardName);
+                    print(attackingCreature.cardName.text + " is attacking " + defendingCreature.cardName.text);
+                    yield return new WaitForSecondsRealtime(2f);
 
+                    print("PLAYERS: " + defendingCreature.cardName.text + " takes " + attackingCreature.currentAttack + " damage.");
+                    print("ENEMIES: " + attackingCreature.cardName.text + " takes " + defendingCreature.currentAttack + " damage.");
                     attackingCreature.TakeDamage(defendingCreature.currentAttack);
                     defendingCreature.TakeDamage(attackingCreature.currentAttack);
-                    print(defendingCreature.cardName + "takes" + attackingCreature.currentAttack + " damage.");
-                    print(attackingCreature.cardName + "takes" + defendingCreature.currentAttack + " damage.");
 
                     attackingCreature.CanAttack = false;
                     attackingCreature.IsActive = false;
@@ -84,12 +86,12 @@ public class BattleStageManager : MonoBehaviour {
 
                 }
                 combatTurn = Turn.Enemy;
-
                 yield return new WaitForSecondsRealtime(2f);
             }
 
             if (combatTurn == Turn.Enemy) {
-                if (AnyAttackers(BM.enemyCreatureSlots)) {
+                Debug.Log("Is Enemy Turn");
+                if (AnyAttackers(BM.enemyCreatureSlots) && AnyDefenders(BM.playerCreatureSlots)) {
 
                     target = FindTarget(BM.playerCreatureSlots);
                     attacker = FindAttacker(BM.enemyCreatureSlots);
@@ -99,37 +101,66 @@ public class BattleStageManager : MonoBehaviour {
 
                     attackingCreature.IsActive = true;
                     defendingCreature.IsTargeted = true;
-                    print(attackingCreature.cardName + " is attacking " + defendingCreature.cardName);
+                    print(attackingCreature.cardName.text + " is attacking " + defendingCreature.cardName.text);
+                    yield return new WaitForSecondsRealtime(2f);
 
+                    print("PLAYERS: " + defendingCreature.cardName.text + " takes " + attackingCreature.currentAttack + " damage.");
+                    print("ENEMIES: " + attackingCreature.cardName.text + " takes " + defendingCreature.currentAttack + " damage.");
                     attackingCreature.TakeDamage(defendingCreature.currentAttack);
                     defendingCreature.TakeDamage(attackingCreature.currentAttack);
-                    print(defendingCreature.cardName + "takes" + attackingCreature.currentAttack + " damage.");
-                    print(attackingCreature.cardName + "takes" + defendingCreature.currentAttack + " damage.");
 
                     attackingCreature.CanAttack = false;
                     attackingCreature.IsActive = false;
                     defendingCreature.IsTargeted = false;
+                } else
+                if (AnyAttackers(BM.enemyCreatureSlots) && !AnyDefenders(BM.playerCreatureSlots)) {
+                    attacker = FindAttacker(BM.enemyCreatureSlots);
+                    CardManager attackingCreature = BM.enemyCreatureSlots[attacker].GetComponent<CardManager>();
+                    print("ATTACK PLAYER");
+
+                    attackingCreature.CanAttack = false;
+
                 }
+
                 combatTurn = Turn.Player;
+
                 yield return new WaitForSecondsRealtime(2f);
             }
         }
+        //   Debug.Log(AnyAttackers(BM.playerCreatureSlots) + ":" + AnyDefenders(BM.enemyCreatureSlots));
+        // Debug.Log(AnyAttackers(BM.enemyCreatureSlots) + ":" + AnyDefenders(BM.playerCreatureSlots));
+
+        print("No more battles to be had");
     }
     //checks to see if any creatures in the list can attack ( CanAttack = true )
     private bool AnyAttackers(List<GameObject> creatureList) {
+        Debug.Log("Checking Attackers");
         bool attackersLeft = false;
-        foreach (var creature in creatureList) {
-            if (creature.GetComponent<CardManager>().CanAttack) {
+        foreach (GameObject creature in creatureList) {
+            if (creature != null && creature.GetComponent<CardManager>().IsAlive && creature.GetComponent<CardManager>().CanAttack) {
                 attackersLeft = true;
                 break;
             }
         }
+        Debug.Log(attackersLeft);
         return attackersLeft;
+    }
+    private bool AnyDefenders(List<GameObject> creatureList) {
+        Debug.Log("Checking Defenders");
+        bool defendersLeft = false;
+        foreach (GameObject creature in creatureList) {
+            if (creature != null && creature.GetComponent<CardManager>().IsAlive) {
+                defendersLeft = true;
+                break;
+            }
+        }
+        Debug.Log(defendersLeft);
+        return defendersLeft;
     }
     private int FindAttacker(List<GameObject> creatureList) {
         int q = -1;
         for (int i = 0; i < creatureList.Count; i++) {
-            if (creatureList[i] != null && creatureList[i].GetComponent<CardManager>().CanAttack) {
+            if (creatureList[i] != null && creatureList[i].GetComponent<CardManager>().IsAlive && creatureList[i].GetComponent<CardManager>().CanAttack) {
                 q = i;
                 break;
             }
@@ -144,21 +175,8 @@ public class BattleStageManager : MonoBehaviour {
         do {
             index = UnityEngine.Random.Range(0, creatureList.Count);
 
-        } while (creatureList[index] == null);
+        } while (creatureList[index] == null || !creatureList[index].GetComponent<CardManager>().IsAlive);
         return index;
-        /*
-        //randomlly check a slot enemy slot 
-       Debug.Log("Random Select index: " + index);
-        GameObject e = BM.enemyCreatureSlots[index];
-        //check if its null
-        if (e == null) {
-            //if its not
-            FindEnemyTarget();
-        } else {
-        return index;
-        }
-        return -1;
-        */
     }
 
     private bool CheckIfThereAreEnemyCreatures() {
@@ -185,6 +203,7 @@ public class BattleStageManager : MonoBehaviour {
             eCM.cardSlot = slot;
             eCM.Inplay = true;
             eCM.CanAttack = true;
+            eCM.IsAlive = true;
             BM.enemyCreatureSlots[slot] = eGo;
             numOfEnemyCreaturesSet++;
         }
@@ -203,6 +222,7 @@ public class BattleStageManager : MonoBehaviour {
             pCM.Inplay = true;
             pCM.IsMine = true;
             pCM.CanAttack = true;
+            pCM.IsAlive = true;
             BM.playerCreatureSlots[slot] = pGo;
             numOfPlayerCreaturesSet++;
 
