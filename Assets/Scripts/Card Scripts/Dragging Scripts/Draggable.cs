@@ -68,5 +68,9 @@ public class Draggable : MonoBehaviour {
         return Camera.main.ScreenToWorldPoint(screenMousePos);
     }
 
-
+    private void OnTriggerEnter(Collider other) {
+        if(dragging && other.CompareTag("CastArea")) {
+            Debug.Log("Casting Card");
+        }
+    }
 }
