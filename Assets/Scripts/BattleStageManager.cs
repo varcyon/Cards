@@ -41,7 +41,7 @@ public class BattleStageManager : MonoBehaviour {
         BM.playerHealth = BM.startingPlayerHealth;
         playerHealth.text = BM.playerHealth.ToString();
 
-        numOfEnemyCreatures = UnityEngine.Random.Range(1, 7);
+        numOfEnemyCreatures = UnityEngine.Random.Range(1, 13);
         while (numOfEnemyCreaturesSet < numOfEnemyCreatures) {
             SetEnemyCreature();
         }

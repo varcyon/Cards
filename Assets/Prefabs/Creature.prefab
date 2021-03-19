@@ -1429,6 +1429,7 @@ MonoBehaviour:
   cardName: {fileID: 8706496017240499220}
   cardType: {fileID: 8706496017518374447}
   cardDescription: {fileID: 8706496017966850494}
+  currentAttack: 0
   cardGlowImage: {fileID: 0}
   cardTargetedGlow: {fileID: 0}
   cardActiveGlow: {fileID: 0}
@@ -2444,6 +2445,7 @@ MonoBehaviour:
   cardName: {fileID: 8706496017854007291}
   cardType: {fileID: 0}
   cardDescription: {fileID: 0}
+  currentAttack: 0
   cardGlowImage: {fileID: 8706496016938202174}
   cardTargetedGlow: {fileID: 7871302402673538868}
   cardActiveGlow: {fileID: 551831687889039389}
@@ -2476,6 +2478,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf0248ff8f0c9b748b7b027995776b02, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  oldParent: {fileID: 0}
 --- !u!114 &8706496018578916787
 MonoBehaviour:
   m_ObjectHideFlags: 0
